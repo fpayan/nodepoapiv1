@@ -1,0 +1,37 @@
+{
+    "announces": [
+        {
+          "nameArticle": "Bicicleta",
+          "textArticle": "Texto del articulo 1",
+          "price": 157.66,
+          "salesAnnounce": true,
+          "urlImage": "bici.jpg",
+          "tags": [
+            "lifestyle",
+            "pedales"
+          ]
+        },
+        {
+          "nameArticle": "iPhone 3GS",
+          "textArticle": "Texto del articulo 1",
+          "price": 322.00,
+          "salesAnnounce": false,          
+          "urlImage": "iphone.png",
+          "tags": [
+            "lifestyle",
+            "mobile"
+          ]
+        },
+        {
+          "nameArticle": "Subaru Forester",
+          "textArticle": "Texto del articulo 1",
+          "price": 42000.00,
+          "salesAnnounce": true,          
+          "urlImage": "forester.jpg",
+          "tags": [
+            "lifestyle",
+            "motor"
+          ]
+        }
+      ]
+}

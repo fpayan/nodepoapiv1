@@ -1,0 +1,36 @@
+{
+  "name": "nodepopapi",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "DEBUG=nodepop:* NODE_PATH=lib NODE_ENV=production nodemon ./bin/www",
+    "startDev": "DEBUG=nodepop:* NODE_PATH=lib NODE_ENV=development nodemon ./bin/www",
+    "installDB": "NODE_PATH=lib node ./database/create_db_seed.js",
+    "jshint": "jshint --exclude ./node_modules . || true",
+    "jscs": "jscs . || true"
+  },
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "body-parser": "~1.18.2",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "dotenv": "^4.0.0",
+    "ejs": "~2.5.7",
+    "express": "~4.15.5",
+    "express-validator": "^4.3.0",
+    "i18next": "^10.2.1",
+    "i18next-express-middleware": "^1.0.7",
+    "i18next-node-fs-backend": "^1.0.0",
+    "jscs": "^3.0.7",
+    "jshint": "^2.9.5",
+    "jsonwebtoken": "^8.1.0",
+    "mongoose": "^4.13.6",
+    "morgan": "~1.9.0",
+    "passport-jwt": "^3.0.1",
+    "serve-favicon": "~2.4.5"
+  },
+  "devDependencies": {
+    "jsdoc": "^3.5.5",
+    "nodemon": "^1.12.5"
+  }
+}

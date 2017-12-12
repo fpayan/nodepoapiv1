@@ -1,0 +1,24 @@
+https://github.com/mashpie/i18n-node
+https://webtranslateit.com/en/docs/file_formats/json
+http://markocen.github.io/blog/i18n-for-node-application.html
+
+https://www.codementor.io/olatundegaruba/nodejs-restful-apis-in-10-minutes-q0sgsfhbd
+https://stackoverflow.com/questions/46789592/node-express-api-routes-for-multilingual-directory-like-url
+
+https://jssolutionsdev.com/blog/express-js-api-and-rest-api-organization-tips-examples-and-techniques/
+https://restpatterns.mindtouch.us/HTTP_Status_Codes
+
+https://github.com/axios/axios
+
+/*
+https://github.com/KevinNTH/express-jwt-mongoose-example
+https://ciphertrick.com/2017/01/11/token-based-authentication-node-js-using-jwt/
+https://www.djamware.com/post/58eba06380aca72673af8500/node-express-mongoose-and-passportjs-rest-api-authentication
+https://github.com/didinj/node-express-mongoose-passport-jwt-rest-api-auth
+https://crosp.net/blog/web/nodejs/secure-rest-api-using-nodejs-part-2-express-jwt-mongoose/
+https://medium.freecodecamp.org/securing-node-js-restful-apis-with-json-web-tokens-9f811a92bb52
+https://github.com/jonathas/todo-api
+
+http://blog.slatepeak.com/creating-a-simple-node-express-api-authentication-system-with-passport-and-jwt/
+scaffold node jwt api validate
+*/
