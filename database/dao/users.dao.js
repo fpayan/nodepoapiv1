@@ -1,17 +1,19 @@
 'use strict';
 
 const UserModel = require('../../models/user.model'),
-    mongoose = require('mongoose'),
-    bcrypt = require('bcrypt'),
-    jwt = require('jsonwebtoken');
+    crypto = require('crypto'),
+    jwt = require('jsonwebtoken'),
+    moment = require('moment');
 
-module.exports.createUser = (req, res, next)=>{
-    let name = req.body.name;
-    let email = req.body.email;
-    let age = req.body.age;
-    let password = req.body.password;
-    let msgError = '';
-    UserModel.find({email: email}).exec((err, user)=>{
+require('../../lib/connectMongoose');
+
+module.exports.createUser = async(req, res, next)=>{
+    let _name = req.body.name;
+    let _email = req.body.email;
+    let _age = req.body.age;
+    let _password = req.body.password;
+    let _msgError = '';
+    UserModel.findOne({email: _email}).exec((err, user)=>{
         // Error yes.
         if(err){
             return res.json({
@@ -21,37 +23,109 @@ module.exports.createUser = (req, res, next)=>{
         }
         // User exist
         if(user){
-            msgError = res.t('USER_EXIST') || 'Existing User';
+            _msgError = req.t('USER_EXIST') || 'Existing User';
             return res.status(403).json({ 
                 success: false, 
-                error: msgError
+                error: _msgError
             });
         }else{ // All correct - create new user
-            
-            console.log('Saving new user : ', newUser.name, newUser.email);
-
+            /*
+                name: 
+                age: 
+                email: 
+                password: 
+                announces:
+                role: 
+                created: 
+                update: 
+            */
+            let _dateCreate = moment(new Date()).format();
+            let _passHash = crypto.createHash('sha256').update(_password).digest('hex');
+            console.log('HASH: ', _passHash);
+            let _newUser = new UserModel({
+                name: _name,
+                age: _age,
+                email: _email,
+                password: _passHash,
+                role: 'Client',
+                created: _dateCreate,
+                update: _dateCreate
+            });
+            console.log('Saving new user : ', _newUser.name, _newUser.email);
+            _newUser.save((err, newUserCreated)=>{
+                if(err){
+                    res.status(500).json({ success: false, error: err});
+                }
+                console.log('OK save user');
+                res.status(200).json({success: true, newUser: _newUser });
+            });
         }
-
     });
 
 };
 
-module.exports.updateUser = (req, res, next)=>{
+module.exports.updateUser = async(req, res, next)=>{
     
 };
 
-module.exports.deleteUser = (req, res, next)=>{
+module.exports.deleteUser = async(req, res, next)=>{
         
 };
 
-module.exports.findUserById = (req, res, next)=>{
+module.exports.findUserToAutentication = async(req, res, next)=>{
+    let _email = req.body.email;
+    let _pass = req.body.password;
+    let _passHash = '';
+    let _msgError = '';
+    UserModel.findOne({email: _email}).exec((err, userCheck)=>{
+        // Error yes.
+        if(err){
+            return res.json({
+                success: false,
+                error: err
+            });
+        }
+        // user not found
+        if( !userCheck ){
+            _msgError = req.t('USER_NOT_FOUND') || 'User not found';
+            return res.status(401).json({ 
+                success: false, 
+                error: _msgError
+            });
+        }
+        // user whether exist ! Check password
+        _passHash = crypto.createHash('sha256').update(_pass).digest('hex'); 
+        if( userCheck.password === _passHash ){
+            // User and password OK
+            let token = jwt.sign({
+                id: userCheck._id
+            }, process.env.JWT_SECRET, {
+                expiresIn: process.env.JWT_EXPIRES_IN
+            });
+            // Send response with token.
+            res.status(200).json({
+                success: true,
+                token: token
+            });
+        }else{
+            // No password coincidente
+            _msgError = req.t('INVALID_PASS') || 'Invalid Password';
+            return res.status(401).json({ 
+                success: false, 
+                error: _msgError
+            });
+        }
+    });// end findOne
+};
+
+module.exports.findUserById = async(req, res, next)=>{
     
 };
 
-module.exports.findAllUser = (req, res, next)=>{
+module.exports.findAllUser = async(req, res, next)=>{
     
 };
 
-module.exports.findByFilterUser = (req, res, next)=>{
+module.exports.findByFilterUser = async(req, res, next)=>{
     
 };

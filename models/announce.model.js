@@ -21,9 +21,8 @@ const announceSchema = new Schema({
     urlImage: {
         type: String, 
         lowercase: true, 
-        trim: true, 
-        //index: true,
-        //unique: true,
+        trim: true,
+        unique: true,
         required: [true, 'The picture of article is required'],
     },
     tags: {
@@ -36,5 +35,15 @@ const announceSchema = new Schema({
     }
 });
 
+announceSchema.statics.list = function(filters, limit, skip, sort, fields) {
+    // obtenemos la query sin ejecutarla
+    const query = Announce.find(filters);
+    query.limit(limit);
+    query.skip(skip);
+    query.sort(sort)
+    query.select(fields);
+    // ejecutamos la query y devolvemos una promesa
+    return query.exec();
+}
 
 module.exports = mongoose.model('Announce', announceSchema);

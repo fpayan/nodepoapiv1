@@ -1,7 +1,6 @@
 'use stric';
 
-const mongoose = require('mongoose'),
-      bcrypt = require('bcrypt');
+const mongoose = require('mongoose');
 Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
@@ -30,7 +29,8 @@ const UserSchema = new Schema({
     announces: [{ type: Schema.Types.ObjectId, ref: 'Announce' }],
     role: {
       type: String,
-      enum: ["Admin", "OwnUser", "Client"]
+      enum: ["Admin", "OwnUser", "Client"],
+      default: 'Client'
     },
     created: {
       type: Date,
@@ -42,38 +42,10 @@ const UserSchema = new Schema({
     }
 });
 
-// Hash the user's password before inserting a new user
-UserSchema.pre('save', function(next) {
-    var user = this;
-    if (this.isModified('password') || this.isNew) {
 
-
-
-      bcrypt.genSalt(10, function(err, salt) {
-        if (err) {
-          return next(err);
-        }
-        bcrypt.hash(user.password, salt, function(err, hash) {
-          if (err) {
-            return next(err);
-          }
-          user.password = hash;
-          next();
-        });
-      });
-    } else {
-      return next();
-    }
-  });
-  
   // Compare password input to password saved in database
   UserSchema.methods.comparePassword = function(pw, cb) {
-    bcrypt.compare(pw, this.password, function(err, isMatch) {
-      if (err) {
-        return cb(err);
-      }
-      cb(null, isMatch);
-    });
+    
   };
 
 module.exports = mongoose.model('User', UserSchema);

@@ -22,3 +22,11 @@ https://github.com/jonathas/todo-api
 http://blog.slatepeak.com/creating-a-simple-node-express-api-authentication-system-with-passport-and-jwt/
 scaffold node jwt api validate
 */
+
+comandos mongo:
+show dbs
+show collections
+use nodepop
+db.users.remove({ "email" : "fake2@fake.org" })
+db.users.find().pretty()
+

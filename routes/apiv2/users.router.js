@@ -12,11 +12,11 @@ module.exports = (app)=>{
     .get(userController.register)
     .post(userController.register);
 
-    app.route(API_VERSION + '/login')
+    app.route(API_VERSION + '/login/:web?')
     .get(userController.login)
     .post(userController.login);
 
-    app.route(API_VERSION + '/logout')
+    app.route(API_VERSION + '/logout/:web?')
     .get(userController.logout)
     .post(userController.logout);
 
