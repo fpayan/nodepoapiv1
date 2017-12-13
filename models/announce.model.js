@@ -32,10 +32,36 @@ const announceSchema = new Schema({
     idUserOwn: { 
         type: Schema.Types.ObjectId, 
         ref: 'User'
+    },
+    created: {
+      type: Date,
+      default: new Date()
+    },
+    update: {
+      type: Date,
+      default: new Date()
     }
 });
 
 announceSchema.statics.list = function(filters, limit, skip, sort, fields) {
+
+/*
+var query = Model.find(conditions).sort(sort).skip(skip).limit(limit);
+
+where
+
+    condition will be say { age: { $gt: 20 } }
+    sort will be say { name: 1}
+    skip will be say 20
+    limit will be say 10
+
+then execute the following query to get the records
+
+return query
+        .exec()
+        .then(function (cursor) { ...... });
+*/
+
     // obtenemos la query sin ejecutarla
     const query = Announce.find(filters);
     query.limit(limit);

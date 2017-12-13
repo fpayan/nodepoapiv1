@@ -5,22 +5,19 @@ const express = require('express'),
     app = express();
 
 const userController = require('../../controllers/users.controller');
-const API_VERSION = '/apiv2'
+const API_VERSION = '/apiv2';
+const API_PATH_USER = '/user';
 
 module.exports = (app)=>{
-    app.route(API_VERSION + '/register/:web?')
+    app.route(`${API_VERSION}${API_PATH_USER}/register/:web?`)
     .get(userController.register)
     .post(userController.register);
 
-    app.route(API_VERSION + '/login/:web?')
+    app.route(`${API_VERSION}${API_PATH_USER}/login/:web?`)
     .get(userController.login)
     .post(userController.login);
 
-    app.route(API_VERSION + '/logout/:web?')
+    app.route(`${API_VERSION}${API_PATH_USER}/logout/:web?`)
     .get(userController.logout)
     .post(userController.logout);
-
-    app.route(API_VERSION + '/announce')
-    .get(userController.requiresLogin)
-    .post(userController.requiresLogin);
 };

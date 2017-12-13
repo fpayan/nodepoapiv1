@@ -5,15 +5,19 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const compress = require('compression');
 const verifyToken = require('./middlewares/middleware_verifyToken');
 const i18next = require('./middlewares/middleware_i18n');
 const index = require('./routes/index');
 const users = require('./routes/users');
-// Test
-const userController = require('./controllers/users.controller');
 
 const app = express();
-
+// Environment
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+} else if (process.env.NODE_ENV === 'production') {
+  app.use(compress());
+}
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -26,11 +30,24 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+
+// Load Connect DB
+require('./lib/connectMongoose');
+
 // i18next for all request
 app.use(i18next.i18nextMiddleware);
+
+// Controllers
+const userController = require('./controllers/users.controller');
+const announceController = require('./controllers/announces.controller');
+
+// Routers
+require('./routes/apiv2/users.router')(app);
+require('./routes/apiv2/announces.router')(app);
+
 // Verify which in router 'apiv1' always have token
 app.use('/apiv1', verifyToken());
-require('./routes/apiv2/users.router')(app);
 //app.use('/apiv2', userController.requiresLogin);
 
 app.use('/', index);

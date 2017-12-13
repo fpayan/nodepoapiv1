@@ -1,12 +1,15 @@
 'use strict';
 
-const jwt = require('jsonwebtoken'),
-    announceModel = require('../models/announce.model'), 
-    utilRequest = require('../lib/utilRequest'),
-    i18next = require('../middlewares/middleware_i18n');
+const jwt = require('jsonwebtoken');
+const announceModel = require('mongoose').model('Announce');
+const utilRequest = require('../lib/utilRequest');
+const i18next = require('../middlewares/middleware_i18n');
+const daoAnnounce = require('../database/dao/announce.dao');
+
+
 
 module.exports.listAllAnnounce = (req, res, next)=>{
-
+    daoAnnounce.findAllAnnounce(req, res, next);    
 };
 
 module.exports.listByIdAnnounce = (req, res, next)=>{
@@ -18,7 +21,11 @@ module.exports.filterAnnounce = (req, res, next)=>{
 };
 
 module.exports.filterByTagAnnounce = (req, res, next)=>{
-    
+    let searchTag = req.query.tag || req.params.tag;
+    return res.json({
+        success: true,
+        message: 'Filter TAG'
+    });
 };
 
 module.exports.updateAnnounce = (req, res, next)=>{

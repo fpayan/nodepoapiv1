@@ -1,11 +1,9 @@
 'use strict';
 
-const UserModel = require('../../models/user.model'),
-    crypto = require('crypto'),
-    jwt = require('jsonwebtoken'),
-    moment = require('moment');
-
-require('../../lib/connectMongoose');
+const UserModel = require('mongoose').model('User');
+const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
+const moment = require('moment');
 
 module.exports.createUser = async(req, res, next)=>{
     let _name = req.body.name;

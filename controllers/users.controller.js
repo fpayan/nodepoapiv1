@@ -1,16 +1,16 @@
 'use strict';
 
-const jwt = require('jsonwebtoken'),
-    userModel = require('../models/user.model'),
-    daoUser = require('../database/dao/users.dao'), 
-    utilRequest = require('../lib/utilRequest');
+const jwt = require('jsonwebtoken');
+const userModel = require('mongoose').model('User');
+const daoUser = require('../database/dao/users.dao'); 
+const utilRequest = require('../lib/utilRequest');
 
 /**
  * Regiter user from web - <HTML> or api - JSON version.
  * 
  * URL valid:
- * /apiv2/register/web - HTML method GET or POST
- * /apiv2/register - API HTML method POST
+ * /apiv2/user/register/web - HTML method GET or POST
+ * /apiv2/user/register - API HTML method POST
  * 
  * @param {*} req 
  * @param {*} res 
@@ -39,8 +39,8 @@ module.exports.register = (req, res, next)=>{
  * Login user from web or api version.
  * 
  * URL valid:
- * /apiv2/register/web - HTML method GET or POST
- * /apiv2/register - API  method POST
+ * /apiv2/user/register/web - HTML method GET or POST
+ * /apiv2/user/register - API  method POST
  * 
  * @param {*} req 
  * @param {*} res 
@@ -69,8 +69,8 @@ module.exports.login = async (req, res, next)=>{
  * Logout user from web or api version.
  * 
  * URL valid:
- * /apiv2/register/web - HTML method GET or POST
- * /apiv2/register - API HTML method POST
+ * /apiv2/user/register/web - HTML method GET or POST
+ * /apiv2/user/register - API HTML method POST
  * 
  * @param {*} req 
  * @param {*} res 
