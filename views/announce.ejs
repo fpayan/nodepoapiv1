@@ -8,9 +8,24 @@
 </head>
 <body>
     <h1>Announces</h1>
-    <pre>
-        <%= announces %>
-    </pre>
-    <p><%= success %></p>
+
+    <% if (announces) { %>
+        <ul>
+            <% announces.forEach(function(announce){ %>
+                <li>
+                    <pre>
+                        <%= announce %>
+                    </pre>
+                </li>
+            <% }); %>
+
+        </ul>
+    
+    <%}%>
+    
+    <% if (success) { %>
+        <p><%= success %></p>
+    <%}%>
+    
 </body>
 </html>

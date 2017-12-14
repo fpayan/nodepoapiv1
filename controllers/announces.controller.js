@@ -43,12 +43,16 @@ module.exports.createAnnounce = (req, res, next)=>{
 
 
 module.exports.updateAnnounce = (req, res, next)=>{
-    
+    daoAnnounce.updateAnnounce(req, res, next);
 };
 
 module.exports.deleteAnnounce = (req, res, next)=>{
-    
+    daoAnnounce.deleteAnnounce(req, res, next);
 };
+
+module.exports.userListAllOwnAnnounces = (req, res, next)=>{
+    daoAnnounce.userListAllOwnAnnounces(req, res, next);
+}
 
 module.exports.requiresLogin =async (req, res, next)=>{
     const token = req.body.token || req.query.token || req.get('x-access-token');
@@ -70,7 +74,7 @@ module.exports.requiresLogin =async (req, res, next)=>{
                     return;
                 } // end secound if - utilRequest.
             }// end error verifies
-            req.userId = decoded.user_id; // lo guardamos en el request para los siguientes middlewares
+            req.user_id = decoded.id; // save user_id into request object for next request validations. (middlewares)
             next(); //no error, proceed
         });
     } else {

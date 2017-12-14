@@ -14,5 +14,7 @@
     "USE_AUTH_ROUTE": "Use route con autentificacion",
     "TOKEN_IS_NOT_FROM_USER": "El token no pertenece al usuario",
     "NOT_FOUND_ANNOUNCES_IN_DB": "No encontrado anuncios en db",
-    "NOT_FOUND_TAG_ANNOUNCES_IN_DB": "Tag de anuncios no encontrados into db"
+    "NOT_FOUND_TAG_ANNOUNCES_IN_DB": "Tag de anuncios no encontrados into db",
+    "ANNOUNCE_SAVED": "Anuncio guardado correctamente !",
+    "ANNOUNCE_SAVED_ERROR": "Anuncio no guardado, hubo un error"
 }
