@@ -5,7 +5,7 @@ const express = require('express'),
     app = express();
 
 const userController = require('../../controllers/users.controller');
-const API_VERSION = '/apiv2';
+const API_VERSION = '/apiv1';
 const API_PATH_USER = '/user';
 
 module.exports = (app)=>{

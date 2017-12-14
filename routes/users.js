@@ -3,8 +3,6 @@
 let jwt = require('jsonwebtoken');
 let crypto = require('crypto');
 let mongoose = require('mongoose');
-//let config = require('../local_config');
-let errorTranslator = require('../lib/errorTranslator');
 
 let express = require('express');
 let router = express.Router();

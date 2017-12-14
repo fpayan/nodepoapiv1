@@ -43,8 +43,8 @@ require('./controllers/users.controller');
 require('./controllers/announces.controller');
 
 // Routers
-require('./routes/apiv2/users.router')(app);
-require('./routes/apiv2/announces.router')(app);
+require('./routes/apiv1/users.router')(app);
+require('./routes/apiv1/announces.router')(app);
 
 // Verify which in router 'apiv1' always have token
 app.use('/apiv1', verifyToken());

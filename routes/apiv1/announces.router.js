@@ -5,7 +5,7 @@ router = express.Router(),
 app = express();
 
 const announceController = require('../../controllers/announces.controller');
-const API_VERSION = '/apiv2',
+const API_VERSION = '/apiv1',
     API_OBJECT_NAME = '/announce';
 
 module.exports = (app)=>{
