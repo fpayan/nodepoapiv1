@@ -26,8 +26,12 @@ const announceSchema = new Schema({
         required: [true, 'The picture of article is required'],
     },
     tags: {
-        type: String,
-        enum:['work', 'lifestyle', 'motor', 'mobile']
+        type: [
+            { 
+                type: String, 
+                enum: ['work', 'lifestyle', 'motor', 'mobile'] 
+            }
+        ]
     },
     idUserOwn: { 
         type: Schema.Types.ObjectId, 

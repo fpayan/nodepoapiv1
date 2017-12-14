@@ -28,9 +28,13 @@ const UserSchema = new Schema({
     },
     announces: [{ type: Schema.Types.ObjectId, ref: 'Announce' }],
     role: {
-      type: String,
-      enum: ["Admin", "OwnUser", "Client"],
-      default: 'Client'
+      type:[
+          {
+            type: String,
+            enum: ["Admin", "OwnUser", "Client"],
+            default: 'Client'
+          }
+      ]      
     },
     created: {
       type: Date,
