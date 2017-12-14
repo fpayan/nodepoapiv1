@@ -311,7 +311,6 @@ module.exports.userListAllOwnAnnounces = async(req, res, next)=>{
                 }// => JSON
             });
         }; // end if(announce)
-
     });
 };
 

@@ -31,3 +31,6 @@ npm-debug.log
 
 # env files
 .env
+
+# Hiden files mac OS
+.DS_Store
