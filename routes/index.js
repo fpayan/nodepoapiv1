@@ -17,7 +17,18 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/signup', function(req, res, next) {
-  res.send('<h1>This is signup</h1>');
+  res.format({
+    html: ()=>{
+      res.send('<h1>This is signup from HTML</h1>');
+    },
+    json: ()=>{
+      res.send('<h1>This is signup from JSON</h1>');
+    },
+    default: ()=>{
+      res.send('<h1>Default response</h1>');
+    }
+  });
+  
 });
 
 router.get('/auth', function(req, res, next) {

@@ -1,5 +1,6 @@
 {
     "USER_NOT_FOUND": "Usuario no encontrado",
+    "USER_NOT_FOUND_ID": "Id de usuario no encontrado en la petición",
     "INVALID_PASS": "Password incorrecto",
     "USER_EXIST":  "Usuario Existente",
     "ENTER_NUMBER": "Usar valor numérico",
@@ -12,5 +13,6 @@
     "EXISTING_TOKEN": "Token ya existe",
     "USE_AUTH_ROUTE": "Use route con autentificacion",
     "TOKEN_IS_NOT_FROM_USER": "El token no pertenece al usuario",
-    "NOT_FOUND_ANNOUNCES_IN_DB": "No encontrado anuncios en db"
+    "NOT_FOUND_ANNOUNCES_IN_DB": "No encontrado anuncios en db",
+    "NOT_FOUND_TAG_ANNOUNCES_IN_DB": "Tag de anuncios no encontrados into db"
 }

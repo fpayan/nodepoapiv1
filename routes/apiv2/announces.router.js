@@ -10,9 +10,9 @@ const API_VERSION = '/apiv2',
 
 module.exports = (app)=>{
     
-    app.route(`${API_VERSION}${API_OBJECT_NAME}/tag/:web?`) // /apiv?/announce/tags
-    .get(announceController.requiresLogin, announceController.filterByTagAnnounce)
-    .post(announceController.requiresLogin, announceController.filterByTagAnnounce);
+    app.route(`${API_VERSION}${API_OBJECT_NAME}/tag/:name?/:limit?/:skip?/:select?`) // /apiv?/announce/tags
+    .get(announceController.requiresLogin, announceController.listByQueryAnnounce)
+    .post(announceController.requiresLogin, announceController.listByQueryAnnounce);
     
     app.route(`${API_VERSION}${API_OBJECT_NAME}/:type/:web?`) // /apiv?/announce/type (sales or search)
     .get(announceController.requiresLogin)
@@ -34,7 +34,7 @@ module.exports = (app)=>{
     .get(announceController.requiresLogin)
     .post(announceController.requiresLogin);
     
-    app.route(`${API_VERSION}${API_OBJECT_NAME}/:web?`) // /apiv?/announce
+    app.route(`${API_VERSION}${API_OBJECT_NAME}`) // /apiv?/announce
     .get(announceController.requiresLogin, announceController.listAllAnnounce)
     .post(announceController.requiresLogin, announceController.listAllAnnounce);
 

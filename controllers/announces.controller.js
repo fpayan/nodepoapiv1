@@ -6,27 +6,41 @@ const utilRequest = require('../lib/utilRequest');
 const i18next = require('../middlewares/middleware_i18n');
 const daoAnnounce = require('../database/dao/announce.dao');
 
+// Return query format req.query or req.params
+const objParamsFilter = {
+    queryFields: async (req, res, next)=> {
+        return {
+            _filter : req.query.filter || req.params.filter || req.body.filter,
+            _limit : req.query.limit || req.params.limit || req.body.limit,
+            _skip : req.query.skip || req.params.skip || req.body.skip,
+            _sort : req.query.sort || req.params.sort || req.body.sort,
+            _fields : req.query.fields || req.params.fields || req.body.fields,
+        }
+    }
+};
 
-
+/**
+ * List all record for doc Announce
+ * 
+ * Call method dao of Announce and get all announces in doc.
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 module.exports.listAllAnnounce = (req, res, next)=>{
-    daoAnnounce.findAllAnnounce(req, res, next);    
+    daoAnnounce.findAllAnnounce(req, res, next, null, null, null, null);    
 };
 
-module.exports.listByIdAnnounce = (req, res, next)=>{
-    
+module.exports.listByQueryAnnounce = (req, res, next)=>{
+    let queryAnnounce = objParamsFilter.queryFields(req, res, next);
+    daoAnnounce.findByQueryAnnounce(req, res, next, queryAnnounce._filter, queryAnnounce._limint, queryAnnounce._skip, queryAnnounce._sort, queryAnnounce._fields);
 };
 
-module.exports.filterAnnounce = (req, res, next)=>{
-    
+module.exports.createAnnounce = (req, res, next)=>{
+    daoAnnounce.createAnnounce(req, res, next);
 };
 
-module.exports.filterByTagAnnounce = (req, res, next)=>{
-    let searchTag = req.query.tag || req.params.tag;
-    return res.json({
-        success: true,
-        message: 'Filter TAG'
-    });
-};
 
 module.exports.updateAnnounce = (req, res, next)=>{
     

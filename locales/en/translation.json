@@ -1,5 +1,6 @@
 {
   "USER_NOT_FOUND": "User not found",
+  "USER_NOT_FOUND_ID": "User id not found in request",
   "INVALID_PASS": "Invalid Password",
   "USER_EXIST": "Existing User",
   "ENTER_NUMBER": "Should use number value",
@@ -12,5 +13,6 @@
   "EXISTING_TOKEN": "Token exist!",
   "USE_AUTH_ROUTE": "Use auth route",
   "TOKEN_IS_NOT_FROM_USER": "Token does not belong to the user",
-  "NOT_FOUND_ANNOUNCES_IN_DB": "Not found announcements into db"
+  "NOT_FOUND_ANNOUNCES_IN_DB": "Not found announcements into db",
+  "NOT_FOUND_TAG_ANNOUNCES_IN_DB": "Not found tag announcements into db"
 }

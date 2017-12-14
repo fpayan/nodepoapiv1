@@ -39,8 +39,8 @@ require('./lib/connectMongoose');
 app.use(i18next.i18nextMiddleware);
 
 // Controllers
-const userController = require('./controllers/users.controller');
-const announceController = require('./controllers/announces.controller');
+require('./controllers/users.controller');
+require('./controllers/announces.controller');
 
 // Routers
 require('./routes/apiv2/users.router')(app);
