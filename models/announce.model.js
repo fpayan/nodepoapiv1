@@ -3,6 +3,9 @@
 const mongoose = require('mongoose'),
 Schema = mongoose.Schema;
 
+/**
+ * @type {Object}
+ */
 const announceSchema = new Schema({
     nameArticle: {
         type: String,
@@ -75,5 +78,5 @@ return query
     // ejecutamos la query y devolvemos una promesa
     return query.exec();
 }
-
+/** @module model/announce */
 module.exports = mongoose.model('Announce', announceSchema);

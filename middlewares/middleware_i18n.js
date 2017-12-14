@@ -28,6 +28,7 @@ i18next
     
 });
 
+/** @module middleware/i18next */
 module.exports = { 
     "i18next": i18next, 
     "i18nextMiddleware" : i18nextMiddleware.handle(i18next)

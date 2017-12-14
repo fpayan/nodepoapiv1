@@ -8,6 +8,7 @@ const announceController = require('../../controllers/announces.controller');
 const API_VERSION = '/apiv1',
     API_OBJECT_NAME = '/announce';
 
+/** @module router/announce */
 module.exports = (app)=>{
     
     app.route(`${API_VERSION}${API_OBJECT_NAME}`) // /apiv?/announce

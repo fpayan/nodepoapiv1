@@ -5,6 +5,8 @@ const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const moment = require('moment');
 
+/**@module dao/user */
+
 module.exports.createUser = async(req, res, next)=>{
     let _name = req.body.name;
     let _email = req.body.email;
@@ -62,14 +64,17 @@ module.exports.createUser = async(req, res, next)=>{
 
 };
 
+/**@module dao/user */
 module.exports.updateUser = async(req, res, next)=>{
     
 };
 
+/**@module dao/user */
 module.exports.deleteUser = async(req, res, next)=>{
         
 };
 
+/**@module dao/user */
 module.exports.findUserToAutentication = async(req, res, next)=>{
     let _email = req.body.email;
     let _pass = req.body.password;
@@ -116,14 +121,17 @@ module.exports.findUserToAutentication = async(req, res, next)=>{
     });// end findOne
 };
 
+/**@module dao/user */
 module.exports.findUserById = async(req, res, next)=>{
     
 };
 
+/**@module dao/user */
 module.exports.findAllUser = async(req, res, next)=>{
     
 };
 
+/**@module dao/user */
 module.exports.findByFilterUser = async(req, res, next)=>{
     
 };

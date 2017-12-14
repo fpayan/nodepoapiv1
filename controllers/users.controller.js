@@ -5,16 +5,17 @@ const userModel = require('mongoose').model('User');
 const daoUser = require('../database/dao/users.dao'); 
 const utilRequest = require('../lib/utilRequest');
 
+/**@module controller/user */
 /**
- * Regiter user from web - <HTML> or api - JSON version.
+ * @description Regiter user from web - <HTML> or api - JSON version.
  * 
  * URL valid:
  * /apiv2/user/register/web - HTML method GET or POST
  * /apiv2/user/register - API HTML method POST
  * 
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param { request } req - Request http object 
+ * @param { response } res - Response http object
+ * @param { next } next - Middledware for next call method 
  */
 module.exports.register = (req, res, next)=>{
     console.log('Method :', req.method);
@@ -35,16 +36,17 @@ module.exports.register = (req, res, next)=>{
     }
 };
 
+/**@module controller/user */
 /**
- * Login user from web or api version.
+ * @description Login user from web or api version.
  * 
  * URL valid:
  * /apiv2/user/register/web - HTML method GET or POST
  * /apiv2/user/register - API  method POST
  * 
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param { request } req - Request http object 
+ * @param { response } res - Response http object
+ * @param { next } next - Middledware for next call method 
  */
 module.exports.login = async (req, res, next)=>{
     // URL have /web on path ?
@@ -65,16 +67,17 @@ module.exports.login = async (req, res, next)=>{
     
 };
 
+/**@module controller/user */
 /**
- * Logout user from web or api version.
+ * @description Logout user from web or api version.
  * 
  * URL valid:
  * /apiv2/user/register/web - HTML method GET or POST
  * /apiv2/user/register - API HTML method POST
  * 
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param { request } req - Request http object 
+ * @param { response } res - Response http object
+ * @param { next } next - Middledware for next call method 
  */
 module.exports.logout =async (req, res, next)=>{
     let _msgToken = '';
@@ -111,7 +114,16 @@ let userAuthenticate = async (_emailCheck, _passCheck)=>{
 
 }
 
-
+/**@module controller/user */
+/**
+ * @description Middleware for controller token's user at every request
+ * 
+ * @param { request } req - Request http object 
+ * @param { response } res - Response http object
+ * @param { next } next - Middledware for next call method 
+ * 
+ * @returns { Object } Objeto javascript with data showing token's user not exist.
+ */
 module.exports.requiresLogin =async (req, res, next)=>{
     const token = req.body.token || req.query.token || req.get('x-access-token');
     let _msgError = '';

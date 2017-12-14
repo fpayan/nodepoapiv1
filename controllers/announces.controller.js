@@ -7,6 +7,11 @@ const i18next = require('../middlewares/middleware_i18n');
 const daoAnnounce = require('../database/dao/announce.dao');
 
 // Return query format req.query or req.params
+/**
+ * @description For full object json with params for query filter in announce dao.
+ * 
+ * @returns { function } - Functions which return a json object with all fields of necessary for query filters in announce dao. 
+ */
 const objParamsFilter = {
     queryFields: async (req, res, next)=> {
         return {
@@ -19,41 +24,76 @@ const objParamsFilter = {
     }
 };
 
+/**@module controller/announce */
 /**
  * List all record for doc Announce
  * 
  * Call method dao of Announce and get all announces in doc.
  * 
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param { request } req - Request http object 
+ * @param { response } res - Response http object
+ * @param { next } next - Middledware for next call method
  */
 module.exports.listAllAnnounce = (req, res, next)=>{
     daoAnnounce.findAllAnnounce(req, res, next, null, null, null, null);    
 };
 
+/**@module controller/announce */
+/**
+ * List all record which match with the filters params
+ * 
+ * @description Call method dao of Announce and get all announces in doc by filters param.
+ * 
+ * @param { request } req - Request http object 
+ * @param { response } res - Response http object
+ * @param { next } next - Middledware for next call method
+ */
 module.exports.listByQueryAnnounce = (req, res, next)=>{
     let queryAnnounce = objParamsFilter.queryFields(req, res, next);
     daoAnnounce.findByQueryAnnounce(req, res, next, queryAnnounce._filter, queryAnnounce._limint, queryAnnounce._skip, queryAnnounce._sort, queryAnnounce._fields);
 };
 
+/**@module controller/announce */
+/**
+ * Create new announce.
+ * 
+ * @description Call method dao of Announce and get all announces in doc by filters param.
+ * 
+ * @param { request } req - Request http object 
+ * @param { response } res - Response http object
+ * @param { next } next - Middledware for next call method
+ * 
+ * @returns { [ Announce ] } - Return array with Announce find in db mongo.  
+ */
 module.exports.createAnnounce = (req, res, next)=>{
     daoAnnounce.createAnnounce(req, res, next);
 };
 
-
+/**@module controller/announce */
 module.exports.updateAnnounce = (req, res, next)=>{
     daoAnnounce.updateAnnounce(req, res, next);
 };
 
+/**@module controller/announce */
 module.exports.deleteAnnounce = (req, res, next)=>{
     daoAnnounce.deleteAnnounce(req, res, next);
 };
 
+/**@module controller/announce */
 module.exports.userListAllOwnAnnounces = (req, res, next)=>{
     daoAnnounce.userListAllOwnAnnounces(req, res, next);
 }
 
+/**@module controller/announce */
+/**
+ * @description Middleware for controller token's user at every request
+ * 
+ * @param { request } req - Request http object 
+ * @param { response } res - Response http object
+ * @param { next } next - Middledware for next call method 
+ * 
+ * @returns { Object } Objeto javascript with data showing token's user not exist.
+ */
 module.exports.requiresLogin =async (req, res, next)=>{
     const token = req.body.token || req.query.token || req.get('x-access-token');
     let _msgError = '';

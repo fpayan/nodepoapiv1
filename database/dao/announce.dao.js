@@ -8,7 +8,7 @@ const i18next = require('../../middlewares/middleware_i18n');
 
 
 
-
+/**@module dao/announce */
 module.exports.findAllAnnounce = async(req, res, next, _limit, _skip, _sort, _fields)=>{
     //console.log('USER ID :', req.user_id );
     let _messageRes = req.t('NOT_FOUND_ANNOUNCES_IN_DB') || 'Not found announcements into db';
@@ -70,6 +70,7 @@ module.exports.findAllAnnounce = async(req, res, next, _limit, _skip, _sort, _fi
     });// end announceModel.find().exec
 };
 
+/**@module dao/announce */
 module.exports.findByQueryAnnounce = async(req, res, next, _filter, _limit, _skip, _sort, _fields)=>{
     //console.log('USER ID :', req.user_id );
     let _messageRes = req.t('NOT_FOUND_ANNOUNCES_IN_DB') || 'Not found announcements into db';
@@ -135,6 +136,7 @@ module.exports.findByQueryAnnounce = async(req, res, next, _filter, _limit, _ski
 
 };
 
+/**@module dao/announce */
 module.exports.createAnnounce = async(req, res, next)=>{
     let _newAnnounce = {
         nameArticle: req.query.name || req.params.name || req.body.name,
@@ -219,6 +221,7 @@ module.exports.createAnnounce = async(req, res, next)=>{
     });
 };
 
+/**@module dao/announce */
 module.exports.updateAnnounce = async(req, res, next)=>{
     res.format({
         html: ()=>{
@@ -238,6 +241,7 @@ module.exports.updateAnnounce = async(req, res, next)=>{
     });
 };
 
+/**@module dao/announce */
 module.exports.deleteAnnounce = async(req, res, next)=>{
     res.format({
         html: ()=>{
@@ -255,6 +259,7 @@ module.exports.deleteAnnounce = async(req, res, next)=>{
     });
 };
 
+/**@module dao/announce */
 module.exports.userListAllOwnAnnounces = async(req, res, next)=>{
     let user = req.user_id;
     console.log('USER ID: ', user);

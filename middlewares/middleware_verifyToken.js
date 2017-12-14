@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken'),
 utilRequest = require('../lib/utilRequest');
 
 // exportamos un creador de middlewares de autenticación
+/** @module middleware/token */
 module.exports = ()=>{ 
     return function(req,res,next) {
     const token = req.body.token || req.query.token || req.get('x-access-token');
@@ -42,12 +43,3 @@ module.exports = ()=>{
         } // end if - token
     }// end return function.
 }
-/*
-https://github.com/auth0/node-jsonwebtoken
-http://www.passportjs.org/packages/
-https://github.com/themikenicholson/passport-jwt
-https://jonathas.com/token-based-authentication-in-nodejs-with-passport-jwt-and-bcrypt/
-https://github.com/ctavan/express-validator
-
-
-*/
