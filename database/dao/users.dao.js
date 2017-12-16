@@ -5,17 +5,39 @@ const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const moment = require('moment');
 
-/**@module dao/user */
+let dataUserCreate = {
+    queryFields: async (req, res, next)=> {
+        return {
+            _name : req.query.name || req.params.name || req.body.name,
+            _email : req.query.email || req.params.email || req.body.email,
+            _age : req.query.age || req.params.age || req.body.age,
+            _password : req.query.password || req.params.password || req.body.password
+        }
+    }
+}
 
+function checkParamsBeforeOfCreateNewUser(reqData){
+
+
+}
+
+/**@module dao/user */
 module.exports.createUser = async(req, res, next)=>{
     let _name = req.body.name;
     let _email = req.body.email;
     let _age = req.body.age;
     let _password = req.body.password;
     let _msgError = '';
+    if(_email === undefined || _email === null || _email === ''){
+        return res.json({
+            success: false,
+            message: 'Falta email'
+        });
+    }
     UserModel.findOne({email: _email}).exec((err, user)=>{
         // Error yes.
         if(err){
+            console.log('sdfsd ', err);
             return res.json({
                 success: false,
                 error: err
@@ -78,47 +100,76 @@ module.exports.deleteUser = async(req, res, next)=>{
 module.exports.findUserToAutentication = async(req, res, next)=>{
     let _email = req.body.email;
     let _pass = req.body.password;
+    let _cross = req.body.cross || false;
     let _passHash = '';
     let _msgError = '';
-    UserModel.findOne({email: _email}).exec((err, userCheck)=>{
-        // Error yes.
+
+    let query = UserModel.findOne({"email": _email});
+
+    query.exec((err, user)=>{
+        let result = {};
         if(err){
-            return res.json({
+            return res.status().render('error',{
                 success: false,
-                error: err
+                message: err.message,
+                error: true,
+                cross: _cross
             });
         }
-        // user not found
-        if( !userCheck ){
-            _msgError = req.t('USER_NOT_FOUND') || 'User not found';
-            return res.status(401).json({ 
-                success: false, 
-                error: _msgError
-            });
+        if(user){
+            if(_cross && user.password === crypto.createHash('sha256').update(_pass).digest('hex')){
+                // User and password OK
+                let token = jwt.sign({
+                    id: user._id
+                }, process.env.JWT_SECRET, {
+                    expiresIn: process.env.JWT_EXPIRES_IN
+                });
+                
+                return res.status(200).render('user',{
+                    success: true,
+                    message: 'User validated',
+                    token: token,
+                    cross: true
+                });
+            }
+            else if( ! _cross && user.password === crypto.createHash('sha256').update(_pass).digest('hex') ){
+                let token = jwt.sign({
+                    id: user._id
+                }, process.env.JWT_SECRET, {
+                    expiresIn: process.env.JWT_EXPIRES_IN
+                });
+                return res.json({
+                    success: true,
+                    message: 'User validated',
+                    token: token,
+                    cross: false
+                });
+            }
         }
-        // user whether exist ! Check password
-        _passHash = crypto.createHash('sha256').update(_pass).digest('hex'); 
-        if( userCheck.password === _passHash ){
-            // User and password OK
-            let token = jwt.sign({
-                id: userCheck._id
-            }, process.env.JWT_SECRET, {
-                expiresIn: process.env.JWT_EXPIRES_IN
-            });
-            // Send response with token.
-            res.status(200).json({
-                success: true,
-                token: token
-            });
-        }else{
-            // No password coincidente
-            _msgError = req.t('INVALID_PASS') || 'Invalid Password';
-            return res.status(401).json({ 
-                success: false, 
-                error: _msgError
-            });
+        else{ // Not user
+            if(_cross){
+                _msgError = req.t('USER_NOT_FOUND') || 'User not found';
+                return res.status(200).render('login',{
+                        success: false,
+                        message: _msgError,
+                        error: "redirect",
+                        cross: _cross
+                    });
+            }
+            else{
+                _msgError = req.t('USER_NOT_FOUND') || 'User not found';
+                return res.json({
+                    success: false,
+                    message: _msgError,
+                    error: "redirect",
+                    cross: false
+                });
+            }
         }
-    });// end findOne
+        
+        
+    });
+
 };
 
 /**@module dao/user */

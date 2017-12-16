@@ -46,6 +46,9 @@ require('./controllers/announces.controller');
 require('./routes/apiv1/users.router')(app);
 require('./routes/apiv1/announces.router')(app);
 
+require('./routes/login.router')(app);
+require('./routes/singup.router')(app);
+
 // Verify which in router 'apiv1' always have token
 app.use('/apiv1', verifyToken());
 //app.use('/apiv2', userController.requiresLogin);

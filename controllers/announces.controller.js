@@ -102,34 +102,48 @@ module.exports.requiresLogin =async (req, res, next)=>{
         jwt.verify(token, process.env.JWT_SECRET, function(err, decoded) {
             if (err) { //failed verification.
                 _msgError = req.t('FAILED_AUTH') || 'Invalid token';
-                if(utilRequest.isApi(req)){ // If is API call, return object to JSON.
-                    return res.json({
-                        "success": false,
-                        "message": _msgError
-                    });
-                }else{ // Return <html>.
-                    const error = new Error(_msgError);
-                    error.status = 401;
-                    next(error);
-                    return;
-                } // end secound if - utilRequest.
+                res.format({
+                    http: ()=>{
+                        return res.status(401).render('login',{
+                                success:false,
+                                message: _msgError
+                            });
+                    },
+                    json: ()=>{
+                        return res.render('login',{
+                            success:false,
+                            message: _msgError
+                        });
+                        // return res.status(401).json({
+                        //         success:false,
+                        //         message: _msgError
+                        //     });
+                    }
+                });
             }// end error verifies
             req.user_id = decoded.id; // save user_id into request object for next request validations. (middlewares)
             next(); //no error, proceed
         });
     } else {
         // forbidden without token
-        if(utilRequest.isApi(req)){
-            _msgError = req.t('NO_TOKEN') || 'No token provided';
-            return res.status(401).json({
-                success: false,
-                message: _msgError
-            });
-        }else{
-            const err = new Error(_msgError);
-            err.status = 401;
-            next(err);
-            return;
-        }// end secound if - utilRequest.
+        _msgError = req.t('FAILED_AUTH') || 'Invalid token';
+        res.format({
+            http: ()=>{
+                return res.render('login',{
+                        success: "false",
+                        message: _msgError
+                    });
+            },
+            json: ()=>{
+                res.type('html');
+                return res.render('login',{
+                    success: false,
+                    message: _msgError
+                }, (err, html)=>{
+                    console.log(err);
+                    res.status(401).send(html);
+                });
+            }
+        });
     } // end if - token
 };// end requiresLogin function.

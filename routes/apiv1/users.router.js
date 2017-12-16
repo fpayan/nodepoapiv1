@@ -10,15 +10,15 @@ const API_PATH_USER = '/user';
 
 /** @module router/user */
 module.exports = (app)=>{
-    app.route(`${API_VERSION}${API_PATH_USER}/register/:web?`)
+    app.route(`${API_VERSION}${API_PATH_USER}/register`)
     .get(userController.register)
     .post(userController.register);
 
-    app.route(`${API_VERSION}${API_PATH_USER}/login/:web?`)
+    app.route(`${API_VERSION}${API_PATH_USER}/login`)
     .get(userController.login)
     .post(userController.login);
 
-    app.route(`${API_VERSION}${API_PATH_USER}/logout/:web?`)
+    app.route(`${API_VERSION}${API_PATH_USER}/logout`)
     .get(userController.logout)
     .post(userController.logout);
 };

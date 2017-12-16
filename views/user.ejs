@@ -1,0 +1,35 @@
+<%- include('./partials/layout.ejs') %>
+
+
+<%- include('./partials/navbar.ejs') %>
+
+<% if (success === true ) { %>
+    <div class="container">
+      <div class="row">
+          <div class="alert alert-danger col-xs-12 col-sm-6 col-md-12" role="alert">
+          <p class="center-block"><%= success %></p>
+          <p class="center-block"><%= message %></p>
+          <p class="center-block"><%= token %></p>
+        </div>
+      </div>
+    </div>
+    
+  <%}%>
+  
+  <a id="goAnnounce" class="btn btn-default" href="#" role="button">Go Announce</a>
+  
+  <h1>Announces</h1>
+<div class="container">
+<div id="dataAnnounce1">
+</div>
+<div>
+    <hr>
+</div>
+<div class="container">
+<div id="dataAnnounce2">
+</div>
+</div>
+
+
+
+<%- include('./partials/footer.ejs') %>

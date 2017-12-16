@@ -5,6 +5,34 @@ const userModel = require('mongoose').model('User');
 const daoUser = require('../database/dao/users.dao'); 
 const utilRequest = require('../lib/utilRequest');
 
+
+function validate_Email_User_For_Login_Html(req){
+    let _email = req.body.email,
+        _isValid = false;
+
+    if(req.body.email === undefined || req.body.email === null || req.body.email === ''){
+        _isValid = false;
+        return _isValid;
+    }else{
+        _isValid = true;
+        return _isValid;
+    }
+}
+
+function validate_Password_User_For_Login_Html(req){
+    let _password = req.body.password,
+        _isValid = false;
+
+    if(req.body.password === undefined || req.body.password === null || req.body.password === ''){
+        _isValid = false;
+        return _isValid;
+    }else{
+        _isValid = true;
+        return _isValid;
+    }
+}
+
+
 /**@module controller/user */
 /**
  * @description Regiter user from web - <HTML> or api - JSON version.
@@ -49,22 +77,43 @@ module.exports.register = (req, res, next)=>{
  * @param { next } next - Middledware for next call method 
  */
 module.exports.login = async (req, res, next)=>{
-    // URL have /web on path ?
-    if( utilRequest.isRegisterWeb(req) && req.method === 'GET' ){
-        // Yes it's! - response format HTML
-        res.render('login', {title: "Login for user", msg: "Login for user"});
-    }
-    else if( !utilRequest.isRegisterWeb(req) && req.method === 'GET' ){
-        res.render('login', {title: "Login for user", msg: "Login for user"});
-    }
-    else if( !utilRequest.isRegisterWeb(req) && req.method === 'POST' ){
-        // response status 401 success: false or status 200 success: true
-        daoUser.findUserToAutentication(req, res, next);
-    }
-    else{
-        res.render('login', {title: "Login for user", msg: "Login for user"});
-    }
+    let _msgError = '';
     
+    if(req.body.cross){
+        // Validar email y pass
+        if(validate_Email_User_For_Login_Html(req) && validate_Password_User_For_Login_Html(req)){
+            
+            daoUser.findUserToAutentication(req, res, next);
+
+        }else{
+            _msgError = req.t('USER_NOT_FOUND') || 'User not found';
+            return res.status(401).render('login',{
+                success: false,
+                message: _msgError
+            });
+        }
+    }
+    else if( ! req.body.cross ){ // Not validate user and not cross
+        if(validate_Email_User_For_Login_Html(req) && validate_Password_User_For_Login_Html(req)){
+            
+            daoUser.findUserToAutentication(req, res, next);
+
+        }else{
+            _msgError = req.t('USER_NOT_FOUND') || 'User not found';
+            return res.status(401).render('login',{
+                success: true,
+                message: _msgError
+            });
+        }
+            
+        }
+    else{
+        return res.render('login', {
+            success: true,
+            message: ''
+        });
+
+    }
 };
 
 /**@module controller/user */
@@ -132,35 +181,48 @@ module.exports.requiresLogin =async (req, res, next)=>{
         jwt.verify(token, process.env.JWT_SECRET, function(err, decoded) {
             if (err) { //failed verification.
                 _msgError = req.t('FAILED_AUTH') || 'Invalid token';
-                if(utilRequest.isApi(req)){ // If is API call, return object to JSON.
-                    return res.json({
-                        "success": false,
-                        "message": _msgError
-                    });
-                }else{ // Return <html>.
-                    const error = new Error(_msgError);
-                    error.status = 401;
-                    next(error);
-                    return;
-                } // end secound if - utilRequest.
+                res.format({
+                    http: ()=>{
+                        return res.status(401).render('login',{
+                                success:false,
+                                message: _msgError
+                            });
+                    },
+                    json: ()=>{
+                        return res.render('login',{
+                            success:false,
+                            message: _msgError
+                        });
+                        // return res.status(401).json({
+                        //         success:false,
+                        //         message: _msgError
+                        //     });
+                    }
+                });
             }// end error verifies
-            req.userId = decoded.user_id; // lo guardamos en el request para los siguientes middlewares
+            req.user_id = decoded.id; // save user_id into request object for next request validations. (middlewares)
             next(); //no error, proceed
         });
     } else {
         // forbidden without token
-        if(utilRequest.isApi(req)){
-            _msgError = req.t('NO_TOKEN') || 'No token provided';
-            return res.status(401).json({
-                success: false,
-                message: _msgError
-            });
-        }else{
-            const err = new Error(_msgError);
-            err.status = 401;
-            next(err);
-            return;
-        }// end secound if - utilRequest.
+        res.format({
+            http: ()=>{
+                return res.render('login',{
+                        success: "false",
+                        message: _msgError
+                    });
+            },
+            json: ()=>{
+                res.type('html');
+                return res.render('login',{
+                    success: false,
+                    message: _msgError
+                }, (err, html)=>{
+                    console.log(err);
+                    res.status(401).send(html);
+                });
+            }
+        });
     } // end if - token
 };// end requiresLogin function.
 
