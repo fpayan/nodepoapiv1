@@ -35,7 +35,34 @@ const objParamsFilter = {
  * @param { next } next - Middledware for next call method
  */
 module.exports.listAllAnnounce = (req, res, next)=>{
-    daoAnnounce.findAllAnnounce(req, res, next, null, null, null, null);    
+    let name = req.query.name || req.body.name || req.params.name;
+    let tag = req.query.tag || req.body.tag || req.params.tag;
+    let price = req.query.price || req.body.price || req.params.price;
+    let sales = req.query.sales || req.body.sales || req.params.sales;
+    let start = parseInt(req.query.start) || parseInt(req.body.start) || parseInt(req.params.start);
+    let limit = parseInt(req.query.limit) || parseInt(req.body.limit) || parseInt(req.params.limit);
+    let sort = req.query.sort || req.body.sort || req.params.sort;
+
+    let filter = {};
+
+    if(name){
+        filter.nameArticle = name;
+    }
+    if(age){
+        filter.age = age;
+    }
+    if(sales){
+        filter.salesAnnounce = sales;
+    }
+    if(price){
+        filter.price = price;
+    }
+    if(tag){
+        filter.tags = tag;
+    }
+
+    daoAnnounce.findAllAnnounce(req, res, next, 
+        filter, limit, skip, sort);    
 };
 
 /**@module controller/announce */

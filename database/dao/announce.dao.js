@@ -9,10 +9,10 @@ const i18next = require('../../middlewares/middleware_i18n');
 
 
 /**@module dao/announce */
-module.exports.findAllAnnounce = async(req, res, next, _limit, _skip, _sort, _fields)=>{
+module.exports.findAllAnnounce = async(req, res, next, _filter, _limit, _skip, _sort, _fields)=>{
     //console.log('USER ID :', req.user_id );
     let _messageRes = req.t('NOT_FOUND_ANNOUNCES_IN_DB') || 'Not found announcements into db';
-    announceModel.find()
+    announceModel.find(_filter)
     .limit(_limit)
     .skip(_skip)
     .sort(_sort)

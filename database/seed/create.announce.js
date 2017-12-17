@@ -54,35 +54,40 @@ const findAllUser = async ()=>{
 
 
 let loadAnnouncesIntoDB = async function (arraID, slepp){
-
+    db_conn.dropDatabase((err)=>{
+        if(err){
+            console.log('DROP ERROR :', err);
+        }
+        console.log('DROP COLLECTIONS ANNOUNCES OK !');
+    });
     let _newAnnounce = null;
 
-        for(let i = 0; i < slepp; i++){
+    for(let i = 0; i < slepp; i++){
 
-            let _newAnnoun = {
-                nameArticle: faker.name.title(),
-                textArticle: faker.lorem.lines(4), 
-                price: faker.random.number({min: 20, max: 100000, precision: 2}),
-                salesAnnounce: faker.random.boolean(),
-                urlImage: faker.image.imageUrl({width: 500, height: 300, category: 'Image'}) + '/' + i,
-                tags: faker.random.arrayElement(['work', 'lifestyle', 'motor', 'mobile']),
-                idUserOwn: faker.random.arrayElement(_listIdUser),
-                created: new Date(),
-                update: new Date()
-            };
-            ModelAnnounce.create(_newAnnoun, (err, announce)=>{
-                console.log('here !!!!');
-                if(err){
-                    console.log('ERROR CREATE ANNOUNCE..', err);
-                }
-                if(announce){
-                    console.log('CREATED ANNOUNCE..\n', announce);
-                }
-                else{
-                    console.log('NOT CREATED ANNOUNCE..\n');
-                }
-            });
-        }// end for
+        let _newAnnoun = {
+            nameArticle: faker.name.title(),
+            textArticle: faker.lorem.lines(4), 
+            price: faker.random.number({min: 20, max: 100000, precision: 2}),
+            salesAnnounce: faker.random.boolean(),
+            urlImage: faker.image.imageUrl({width: 500, height: 300, category: 'Image'}) + '/' + i,
+            tags: faker.random.arrayElement(['work', 'lifestyle', 'motor', 'mobile']),
+            idUserOwn: faker.random.arrayElement(_listIdUser),
+            created: new Date(),
+            update: new Date()
+        };
+        ModelAnnounce.create(_newAnnoun, (err, announce)=>{
+            //
+            if(err){
+                console.log('ERROR CREATE ANNOUNCE..', err);
+            }
+            if(announce){
+                console.log('CREATED ANNOUNCE..\n', announce);
+            }
+            else{
+                console.log('NOT CREATED ANNOUNCE..\n');
+            }
+        });
+    }// end for
 };
 
 let users = findAllUser();
