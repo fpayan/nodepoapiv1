@@ -5,7 +5,8 @@
   "scripts": {
     "start": "DEBUG=nodepop:* NODE_PATH=lib NODE_ENV=production nodemon ./bin/www",
     "startDev": "DEBUG=nodepop:* NODE_PATH=lib NODE_ENV=development nodemon ./bin/www",
-    "installDB": "NODE_PATH=lib node ./database/create_db_seed.js",
+    "createUser": "NODE_PATH=lib node ./database/seed/create.users.js",
+    "createAnnounce": "NODE_PATH=lib node ./database/seed/create.announce.js",
     "jshint": "jshint --exclude ./node_modules . || true",
     "jscs": "jscs . || true"
   },
