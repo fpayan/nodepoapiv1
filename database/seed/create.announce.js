@@ -54,12 +54,12 @@ const findAllUser = async ()=>{
 
 
 let loadAnnouncesIntoDB = async function (arraID, slepp){
-    db_conn.dropDatabase((err)=>{
-        if(err){
-            console.log('DROP ERROR :', err);
-        }
-        console.log('DROP COLLECTIONS ANNOUNCES OK !');
-    });
+    // db_conn.dropDatabase((err)=>{
+    //     if(err){
+    //         console.log('DROP ERROR :', err);
+    //     }
+    //     console.log('DROP COLLECTIONS ANNOUNCES OK !');
+    // });
     let _newAnnounce = null;
 
     for(let i = 0; i < slepp; i++){
