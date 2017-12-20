@@ -89,7 +89,7 @@ async function createAnnounces(arrID, slepp){
     let _total = null;
     //
     console.log('SLEPP', slepp);
-    //await db_conn.collection('announces').drop();
+    await db_conn.collection('announces').drop();
     //
     for(let i = 0; i < slepp; i++){
 
