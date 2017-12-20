@@ -22,7 +22,7 @@ db_conn.once('open', ()=>{
 mongoose.connect('mongodb://localhost:27017/nodepop').then(()=>{
     createUsers().then(result =>{
         //
-        createAnnounces(result).then(result =>{
+        createAnnounces(result, 20).then(result =>{
             console.log('END SCRIPT WITH RESULTED : ',result);
             db_conn.close(err=>{
                 console.log('CLOSE DB END METHOD :', err);
@@ -87,10 +87,13 @@ async function createUsers() {
 async function createAnnounces(arrID, slepp){
     let _newAnnounce = null;
     let _total = null;
-
+    //
+    console.log('SLEPP', slepp);
+    //await db_conn.collection('announces').drop();
+    //
     for(let i = 0; i < slepp; i++){
 
-         _newAnnoun = {
+         _newAnnounce = {
             nameArticle: faker.name.title(),
             textArticle: faker.lorem.lines(4), 
             price: faker.random.number({min: 20, max: 100000, precision: 2}),
@@ -101,7 +104,7 @@ async function createAnnounces(arrID, slepp){
             created: new Date(),
             update: new Date()
         };
-        await ModelAnnounce.create(_newAnnoun, (err, announce)=>{
+        await ModelAnnounce.create(_newAnnounce, (err, announce)=>{
             //
             if(err){
                 console.log('ERROR CREATE ANNOUNCE..', err);
