@@ -30,11 +30,10 @@ Clonamos este repo desde **Github** para poder instala los módulos necesarios p
  ```
 ### 2. Antes de ejecutar nada...
 
-Después de tener el repo descargado en su maquina hay que llenar la base de datos con algunos usuariso y anuncios para que las peticiones devuelvan algunos datos, así que ejecutamos los siguiente comando en la ternina:
+Después de tener el repo descargado en su maquina hay que llenar la base de datos con algunos usuariso y anuncios para que las peticiones devuelvan algunos datos, así que ejecutamos el siguiente comando en la ternina:
 
 ```Bash
- $ npm run createUser
- $ npm run createAnnounce
+ $ npm run seed-db
 ```
 Ahora deberemos tener datos dentro de una db llamada **nodepop** y con dos colecciones llamadas **users** y **announces** respectivamentes.
 
