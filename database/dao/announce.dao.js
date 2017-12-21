@@ -6,7 +6,67 @@ const moment = require('moment');
 const utilRequest = require('../../lib/utilRequest');
 const i18next = require('../../middlewares/middleware_i18n');
 
+module.exports.searchAnnouncesByQuery = async (req, res, next)=>{
+    // OPTIONS LIMIT - SKIP AND SORT
+    let options = {
+        limit: parseInt(req.query.limit) || parseInt(req.params.limit) || parseInt(req.body.limit) || 0, // Number,
+        skip: parseInt(req.query.skip) || parseInt(req.params.skip) || parseInt(req.body.skip) || 0, // Number,
+        sort: req.query.sort || req.params.sort || req.body.sort // { field: -1, field2: 1 }
+    }
+    // FIELDS FOR SELECT PROJECT { field_1: 1, field_2: 1, , field_3: 1}
+    let selectOptions = {
+        select : req.query.fields || req.params.fields || req.body.fields // [ 'field_1', 'field_2', 'field_3']
+    }
+    // FILTER FOR FIND ANNOUNCE ( one or many ).
+    let filterQuery = {};
+    if(req.body.price){
+        filterQuery.price = req.body.price;
+    }
+    if(req.body.salesAnnounce){
+        filterQuery.salesAnnounce = req.body.salesAnnounce;
+    }
+    if(req.body._id){
+        filterQuery._id = req.body._id; 
+    }
+    if(req.body.nameArticle){
+        let reg = new RegExp(req.body.nameArticle);
+        filterQuery.nameArticle = reg;
+    }
+    
+    // console.log(req.body.fields);
 
+    let _messageRes = req.t('NOT_FOUND_ANNOUNCES_IN_DB') || 'Not found announcements into db';
+
+    // console.log('FILTER QUERY :', filterQuery );
+    
+    // Object.getOwnPropertyNames(filterQuery).forEach((val, idx, array)=>{
+    //     console.log('KEY :', val);
+    //     console.log('PROPERTY :', filterQuery[val]);
+    // });
+
+    announceModel.find(filterQuery )
+    .setOptions(options)
+    .select(selectOptions.select)
+    .exec((err, announcesReturns )=>{
+        if(err){
+            console.log('ERROR SEARCH ANNOUNCES :', err);
+        }
+        //
+        if(announcesReturns){
+            console.log('FINDING... : ', announcesReturns);
+            return res.json(announcesReturns);
+        }
+        //
+        if( ! announcesReturns){
+            console.log('DON\'T FIND ANNOUNCES ;\( ');
+            return res.json({
+                success: false,
+                message: _messageRes
+            });
+        }
+    });
+
+}
 
 /**@module dao/announce */
 module.exports.findAllAnnounce = async(req, res, next, _filter, _limit, _skip, _sort, _fields)=>{

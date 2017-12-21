@@ -42,4 +42,7 @@ module.exports = (app)=>{
     app.route(`${API_VERSION}${API_OBJECT_NAME}/name/:web?`) // /apiv?/announce/name (announce sort name)
     .get(announceController.requiresLogin)
     .post(announceController.requiresLogin);
+
+    app.route(`${API_VERSION}${API_OBJECT_NAME}/search`)
+    .post(announceController.requiresLogin, announceController.searchAnnouncesByQuery);
 };

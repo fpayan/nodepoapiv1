@@ -239,3 +239,44 @@ Return list of announces
 
 ---
 ![](./public/images/announces-post.png)
+
+### c) Announces search with filters (POST).
+
+**Method**: `apiv1/announce/search`
+
+| Parameter		| Type					  | Description                          |
+|:------------ 	|:---------------:	  | :----------------------              |
+| token	      	| String			 	  | (required) token.                    |
+| nameAnnounce	| String         	  | Initial word of announce           |
+| fields	      	| Array of [ String ] | For select project.                  |
+| price	      	| Object JSON or Number | For filter files *price* if is JSON it must be comparason [MongoDB](https://docs.mongodb.com/manual/reference/operator/query/) if it's Number ejem: 1234                     |
+| salesAnnounce 	| Object JSON or String	(true/false) | For filter *salesAnnounce* fields if is JSON it must be comparason [MongoDB](https://docs.mongodb.com/manual/reference/operator/query/) if it's String ejem: "true"                     |
+| sort	      	| Object JSON			 	  | Order by fields                    |
+| limit	      	| Number			 	  | Limit of register to return.                    |
+| skip	      	| Number			 	  | Return records from *skip* number to *limit*                    |
+
+
+**Request URL**: `http://localhost:3000/apiv1/announce/search` 
+
+Ejemplo de petición:
+
+~~~json
+{
+  "fields" : [ "nameArticle", "price", "created" ], 
+  "_id" : "5a3a7c9c4ce4301b86b0b068" ,
+  "price" : { "$gt" : "36000"} ,
+  "salesAnnounce" :  { "$eq": "true" },
+  "sort": { "nameArticle" : "1" },
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhM2E3YzljNGNlNDMwMWI4NmIwYjA1ZSIsImlhdCI6MTUxMzg3MDIwNiwiZXhwIjoxNTEzOTU2NjA2fQ.f32s3b3mmS4py_ZKWjJqnY6Sc-M997YtZfLxe1nZaN8"
+}
+~~~
+
+---
+
+!['Filter json'](./public/images/filter-json.png)
+
+___
+
+
+Copyright **Francisco Payán Calero** ® 2017
+VI Bootcamp Mobile. [Keepcoding.io](https://keepcoding.io/es/)

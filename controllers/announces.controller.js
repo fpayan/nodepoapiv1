@@ -15,11 +15,11 @@ const daoAnnounce = require('../database/dao/announce.dao');
 const objParamsFilter = {
     queryFields: async (req, res, next)=> {
         return {
-            _filter : req.query.filter || req.params.filter || req.body.filter,
-            _limit : req.query.limit || req.params.limit || req.body.limit,
-            _skip : req.query.skip || req.params.skip || req.body.skip,
-            _sort : req.query.sort || req.params.sort || req.body.sort,
-            _fields : req.query.fields || req.params.fields || req.body.fields,
+            _filter : req.query.filter || req.params.filter || req.body.filter, // { field1 : 'Name title' } or { filed1: { $eq: 'Na' }}
+            _limit : parseInt(req.query.limit) || parseInt(req.params.limit) || parseInt(req.body.limit), // Number
+            _skip : parseInt(req.query.skip) || parseInt(req.params.skip) || parseInt(req.body.skip), // Number
+            _sort : req.query.sort || req.params.sort || req.body.sort, // { field: -1, field2: 1 }
+            _fields : req.query.fields || req.params.fields || req.body.fields, // { field1: 1, field2: 1}
         }
     }
 };
@@ -110,6 +110,22 @@ module.exports.deleteAnnounce = (req, res, next)=>{
 module.exports.userListAllOwnAnnounces = (req, res, next)=>{
     daoAnnounce.userListAllOwnAnnounces(req, res, next);
 }
+
+/**@module controller/announce */
+/**
+ * @description Middleware for controller search request from method POST only.
+ * 
+ * @param { request } req - Request http object 
+ * @param { response } res - Response http object
+ * @param { next } next - Middledware for next call method 
+ * 
+ * @returns { [Announces] } Array of Announces if exist o Array empty.
+ */
+module.exports.searchAnnouncesByQuery = async (req, res, next)=>{
+    //let dataSearch = objParamsFilter.queryFields(req, res, next);
+    daoAnnounce.searchAnnouncesByQuery(req, res, next)
+}
+
 
 /**@module controller/announce */
 /**
