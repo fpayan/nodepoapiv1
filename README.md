@@ -37,7 +37,7 @@ Después de tener el repo descargado en su maquina hay que llenar la base de dat
 ```
 Ahora deberemos tener datos dentro de una db llamada **nodepop** y con dos colecciones llamadas **users** y **announces** respectivamentes.
 
-Dentro de nuestras pruebas trabajaremos que un *user* **fake1@fake.org** como email y como password **12345**
+Dentro de nuestras pruebas trabajaremos que un *user* **faker1@faker.org** como email y como password **12345**
 
 Para iniciar la **api** de *nodepop* debemos hacerlo con el siguiente comando:
 
